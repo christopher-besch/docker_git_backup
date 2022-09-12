@@ -8,7 +8,7 @@ IFS=$' \n\t'
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 GIT_BACKUP_DIR="/var/lib/git_backup"
-TEMP_DIR="$GIT_BACKUP_DIR/temp"
+TEMP_DIR="/origin"
 BORG_REPO="$GIT_BACKUP_DIR/repo"
 CONFIGS_DIR="$GIT_BACKUP_DIR/configs"
 # used to clone repos into ->
