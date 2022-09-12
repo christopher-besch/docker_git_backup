@@ -8,7 +8,7 @@ IFS=$' \n\t'
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 GIT_BACKUP_DIR="/var/lib/git_backup"
-LOG="$GIT_BACKUP_DIR/temp/git_backup.log"
+LOG="/origin/git_backup.log"
 
 echo "running git_backup_init.sh"
 
