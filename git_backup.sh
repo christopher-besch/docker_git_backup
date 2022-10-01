@@ -89,25 +89,29 @@ backup_all_repos() {
 }
 
 create_borg_backup() {
+    echo checking
+    borg -r $BORG_REPO check
+    echo "checking done"
+
     export BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes
-    if ! borg check $BORG_REPO; then
+    if ! borg -r $BORG_REPO check; then
         echo "borg backup repo invalid" >> $LOG
         return
     fi
     echo >> $LOG
 
     echo "creating borg backup"
-    borg create -error --compression $BORG_COMPRESSION "${BORG_REPO}::git_backup_{now}" $TEMP_DIR
+    borg -r $BORG_REPO create --compression $BORG_COMPRESSION "git_backup_{now}" $TEMP_DIR
 
     if [ ! -z ${PRUNE_CFG+x} ]; then
-        echo "running: borg prune $PRUNE_CFG $BORG_REPO"
-        borg prune $PRUNE_CFG $BORG_REPO
+        echo "running: borg -r $BORG_REPO prune $PRUNE_CFG"
+        borg -r $BORG_REPO prune $PRUNE_CFG
     else
         echo "PRUNE_CFG not defined"
     fi
 
     echo "compacting borg repo"
-    borg compact $BORG_REPO
+    borg -r $BORG_REPO compact
 }
 
 echo "running git_backup.sh"

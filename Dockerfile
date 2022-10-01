@@ -1,8 +1,7 @@
-# can't be debian because it doesn't have borgbackup 1.2
-FROM ubuntu:latest
+FROM chrisbesch/borg2
 
 RUN apt-get update && \
-    apt-get install -y bash git python3 python3-pip borgbackup && \
+    apt-get install -y bash git python3 python3-pip && \
     pip3 install PyGithub
 
 # configure git
