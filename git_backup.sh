@@ -76,7 +76,8 @@ get_all_repos() {
 }
 
 backup_all_repos() {
-    echo "starting backup at $(date)" >> $LOG
+    echo "starting git backup"
+    echo "starting git backup at $(date)" >> $LOG
 
     get_all_repos
     while IFS="" read -r CUR_DIR || [ -n "$CUR_DIR" ]; do
@@ -89,6 +90,8 @@ backup_all_repos() {
 }
 
 create_borg_backup() {
+    echo "starting borg backup"
+
     echo checking
     borg -r $BORG_REPO check
     echo "checking done"
@@ -96,7 +99,11 @@ create_borg_backup() {
     export BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes
     if ! borg -r $BORG_REPO check; then
         echo "borg backup repo invalid" >> $LOG
+        echo "borg backup repo invalid"
         return
+    else
+        echo "borg backup repo valid"
+    fi
     fi
     echo >> $LOG
 
