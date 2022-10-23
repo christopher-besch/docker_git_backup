@@ -8,9 +8,17 @@ IFS=$' \n\t'
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 GIT_BACKUP_DIR="/var/lib/git_backup"
+BORG_REPO="$GIT_BACKUP_DIR/repo"
 LOG="/origin/git_backup.log"
 
 echo "running git_backup_init.sh"
+
+if [ -z "$(ls -A $BORG_REPO)" ]; then
+   echo "$BORG_REPO is empty, creating borg repo"
+   borg -r $BORG_REPO rcreate --encryption=none
+else
+    echo "$BORG_REPO is not empty"
+fi
 
 # TODO: allow other git servers
 if [ ! -z ${GITHUB_USERNAME+x} ]; then
