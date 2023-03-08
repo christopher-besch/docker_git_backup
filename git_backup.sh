@@ -104,7 +104,6 @@ create_borg_backup() {
     else
         echo "borg backup repo valid"
     fi
-    fi
     echo >> $LOG
 
     echo "creating borg backup"
